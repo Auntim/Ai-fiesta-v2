@@ -1,0 +1,80 @@
+export default [
+    {
+        model: "GPT",
+        icon: "/gpt.png",
+        premium: false,
+        enable: true,
+        subModel: [
+            { name: "GPT 3.5", premium: false, id: "gpt-3.5" },
+            { name: "GPT 3.5 turbo", premium: false, id: "gpt-3.5-turbo" },
+            { name: "GPT 4.1 Mini", premium: false, id: "gpt-4.1-mini" },
+            { name: "GPT 4.1", premium: true, id: "gpt-4.1" },
+            { name: "GPT 5 Nano", premium: false, id: "gpt-5-nano" },
+            { name: "GPT 5 Mini", premium: false, id: "gpt-5-mini" },
+            { name: "GPT 5", premium: true, id: "gpt-5" },
+        ],
+    },
+    {
+        model: "Gemini",
+        icon: "/gemini.png",
+        premium: false,
+        enable: true,
+        subModel: [
+            { name: "Gemini 2.5 Lite", premium: false, id: "gemini-2.5-flash-lite" },
+            { name: "Gemini 2.5 Flash", premium: false, id: "gemini-2.5-flash" },
+            { name: "Gemini 2.5 Pro", premium: true, id: "gemini-2.5-pro" },
+        ],
+    },
+    {
+        model: "Deepseek",
+        icon: "/deepseek.png",
+        premium: false,
+        enable: true,
+        subModel: [
+            { name: "Deepseek R1", premium: false, id: "deepseek-R1" },
+            { name: "Deepseek R1", premium: true, id: "deepseek-R1-2528" },
+        ],
+    },
+    {
+        model: "Mistral",
+        icon: "/mistral.png",
+        premium: true,
+        enable: true,
+        subModel: [
+            { name: "Mistral 7B Lite", premium: true, id: "mistral-medium-2505" },
+            { name: "Mixtral 8x7B", premium: false, id: "Ministral-3B" },
+        ],
+    },
+
+    {
+        model: "Grok",
+        icon: "/grok.png",
+        premium: true,
+        enable: true,
+        subModel: [
+            { name: "Grok 3 mini", premium: false, id: "grok-1-mini" },
+            { name: "Grok 2", premium: true, id: "grok-3" },
+        ],
+    },
+    {
+        model: "Cohere",
+        icon: "/cohere.png",
+        premium: true,
+        enable: true,
+        subModel: [
+            { name: "Command command A", premium: false, id: "command-command-a" },
+            { name: "Command command R 0824", premium: false, id: "command-command-r-08-2024" },
+        ],
+    },
+    {
+        model: "LLaMA",
+        icon: "/llama.png",
+        premium: true,
+        enable: true,
+        subModel: [
+            { name: "Llama 3.3 70B Instruct", premium: true, id: "Llama-3.3-70B-Instruct" },
+            { name: "Llama 4 Scout 17B 16E Instruct", premium: true, id: "Llama-4-Scout-17B-16E-Instruct" },
+
+        ],
+    },
+];
