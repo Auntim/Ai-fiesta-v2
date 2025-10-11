@@ -8,12 +8,15 @@ import {
     SidebarGroup,
     SidebarHeader,
 } from "@/components/ui/sidebar"
-import { Moon, Sun } from "lucide-react"
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { Bold, Bolt, Moon, Sun, User2, Zap } from "lucide-react"
 import { useTheme } from "next-themes";
 import Image from "next/image"
+import CreditProgress from "./CreditProgress";
 
 export function AppSidebar() {
     const { theme, setTheme } = useTheme();
+    const { user } = useUser();
     return (
         <Sidebar>
             <SidebarHeader >
@@ -33,22 +36,46 @@ export function AppSidebar() {
                     </div>
                 </div>
                 <div className="mt-1 w-full">
-                    <Button className='w-full' size='lg'>  + New Chat </Button>
+                    {user ?
+                        <Button className='w-full' size='lg'>  + New Chat </Button>
+                        :
+                        <SignInButton>
+                            <Button className='w-full' size='lg'>  + New Chat </Button>
+                        </SignInButton>
+                    }
                 </div>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup className='p-2'>
                     <h2 className="text-md font-semibold">Chat History</h2>
-                    <p className="text-sm text-gray-500">sign in to start chatting with multiple ai model</p>
+                    {!user ? <p className="text-sm text-gray-500">sign in to start chatting with multiple ai model</p>
+                        :
+                        <h2>history</h2>
+                    }
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter>
                 <div className="mb-4">
-                    <Button className={'w-full'} size='lg'>
-                        Sign in / Sign Up
-                    </Button>
+                    {!user ? <SignInButton mode="modal">
+                        <Button className={'w-full'} size='lg'>
+                            Sign in / Sign Up
+                        </Button>
+                    </SignInButton>
+                        :
+                        <div>
+                            <CreditProgress />
+                            <Button className={'w-full mb-3'}><Zap />Upgrade Plan</Button>
+                            <Button className={' gap-2 flex justify-between'} variant={'ghost'}>
+                                <User2 />
+                                <h2>Settings</h2>
+                            </Button>
+                            <SignOutButton>
+                                <Button className={'w-full mt-3'} variant={'destructive'}>Sign Out</Button>
+                            </SignOutButton>
+                        </div>
+                    }
                 </div>
             </SidebarFooter>
-        </Sidebar>
+        </Sidebar >
     )
 }
