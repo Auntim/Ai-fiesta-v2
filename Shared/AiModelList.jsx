@@ -26,13 +26,13 @@ export default [
         ],
     },
     {
-        model: "Deepseek",
+        model: "DeepSeek",
         icon: "/deepseek.png",
         premium: false,
         enable: true,
         subModel: [
-            { name: "Deepseek R1", premium: false, id: "deepseek-R1" },
-            { name: "Deepseek R1", premium: true, id: "deepseek-R1-2528" },
+            { name: "DeepSeek R1", premium: false, id: "deepseek-R1" },
+            { name: "Deepseek R1 Pro", premium: true, id: "deepseek-R1-2528" },
         ],
     },
     {
