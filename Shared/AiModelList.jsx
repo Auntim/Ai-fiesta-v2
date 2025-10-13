@@ -31,8 +31,8 @@ export default [
         premium: false,
         enable: true,
         subModel: [
-            { name: "DeepSeek R1", premium: false, id: "deepseek-R1" },
-            { name: "Deepseek R1 Pro", premium: true, id: "deepseek-R1-2528" },
+            { name: "DeepSeek R1", premium: false, id: "DeepSeek-R1" },
+            { name: "Deepseek R1 Pro", premium: true, id: "DeepSeek-R1-0528" },
         ],
     },
     {
@@ -52,7 +52,7 @@ export default [
         premium: true,
         enable: true,
         subModel: [
-            { name: "Grok 3 mini", premium: false, id: "grok-1-mini" },
+            { name: "Grok 3 mini", premium: false, id: "grok-3-mini" },
             { name: "Grok 2", premium: true, id: "grok-3" },
         ],
     },
