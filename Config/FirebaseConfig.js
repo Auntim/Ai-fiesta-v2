@@ -6,18 +6,21 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_apiKey,
-    authDomain: process.env.NEXT_PUBLIC_authDomain,
-    projectId: process.env.NEXT_PUBLIC_projectId,
-    storageBucket: process.env.NEXT_PUBLIC_storageBucket,
-    messagingSenderId: process.env.NEXT_PUBLIC_messagingSenderId,
-    appId: process.env.NEXT_PUBLIC_appId
+    apiKey: "AIzaSyAqKpDEs5WKRsoA0VG7wTA49gAMNc127O0",
+    authDomain: "new-bajar-395fa.firebaseapp.com",
+    databaseURL: "https://new-bajar-395fa-default-rtdb.firebaseio.com",
+    projectId: "new-bajar-395fa",
+    storageBucket: "new-bajar-395fa.firebasestorage.app",
+    messagingSenderId: "572328137653",
+    appId: "1:572328137653:web:7da1b90a28432b3b813ffc"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
+// console.log(process.env.NEXT_PUBLIC_apiKey)
+// console.log(process.env.NEXT_PUBLIC_authDomain)
 
 
 // Import the functions you need from the SDKs you need
