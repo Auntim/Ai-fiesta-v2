@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from './_components/AppSidebar'
 import AppHeader from './_components/AppHeader'
 import { useUser } from '@clerk/nextjs'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '@/Config/FirebaseConfig'
 import { AiselectedModelContext } from '@/context/AiSelectedModelContext'
 import { DefaultModel } from '@/Shared/SharedModelAi'
@@ -16,6 +16,7 @@ function Provider({ children, ...props }) {
 
     const [aiSelectedModel, setAiSelectedModel] = useState(DefaultModel);
     const [userDetails, setUserDetails] = useState();
+    const [messages, setMessages] = useState();
     const { user } = useUser();
 
     useEffect(() => {
@@ -24,14 +25,25 @@ function Provider({ children, ...props }) {
         }
     }, [user])
 
+    useEffect(() => {
+        UpdateAimodelSelectionpref();
+    }, [aiSelectedModel]);
+
+    const UpdateAimodelSelectionpref = async () => {
+        const docref = doc(db, "users", user?.primaryEmailAddress?.emailAddress);
+        await updateDoc(docref, {
+            selectedModelRef: aiSelectedModel
+        })
+    }
+
     const CreateNewuser = async () => {
         const userRef = doc(db, 'users', user?.primaryEmailAddress?.emailAddress);
         const userSnaf = await getDoc(userRef);
 
         if (userSnaf.exists()) {
-            console.log("user already exists");
+            // console.log("user already exists");
             const userInfo = userSnaf.data();
-            setAiSelectedModel(userInfo?.selectedModelRef);
+            setAiSelectedModel(userInfo?.selectedModelRef ?? DefaultModel);
             setUserDetails(userInfo);
             return;
         }
@@ -45,7 +57,7 @@ function Provider({ children, ...props }) {
                 credits: 1000, //paid user
             }
             await setDoc(userRef, userData);
-            console.log("new user created");
+            // console.log("new user created");
             setUserDetails(userData);
         }
 
@@ -59,7 +71,7 @@ function Provider({ children, ...props }) {
             disableTransitionOnChange
             {...props}>
             <UserDetailcontext.Provider value={{ userDetails, setUserDetails }}>
-                <AiselectedModelContext.Provider value={{ aiSelectedModel, setAiSelectedModel }}>
+                <AiselectedModelContext.Provider value={{ aiSelectedModel, setAiSelectedModel, messages, setMessages }}>
                     <SidebarProvider>
                         <AppSidebar />
                         <div className='w-full'>

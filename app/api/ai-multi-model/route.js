@@ -4,14 +4,14 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
 
-    const { message, aiModel, parentModel } = await req.json();
+    const { message, model, parentModel } = await req.json();
 
     /* Send POST request using Axios */
     const response = await axios.post(
         "https://kravixstudio.com/api/v1/chat",
         {
             message: message, // Messages to AI
-            aiModel: aiModel,                     // Selected AI model
+            aiModel: model,                     // Selected AI model
             outputType: "text"                         // 'text' or 'json'
         },
         {
@@ -25,8 +25,6 @@ export async function POST(req) {
     console.log(response.data);
     return NextResponse.json({
         ...response.data,
-        aiModel: parentModel
+        model: parentModel
     })
-
-
 }
