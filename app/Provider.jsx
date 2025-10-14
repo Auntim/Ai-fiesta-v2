@@ -11,6 +11,7 @@ import { db } from '@/Config/FirebaseConfig'
 import { AiselectedModelContext } from '@/context/AiSelectedModelContext'
 import { DefaultModel } from '@/Shared/SharedModelAi'
 import { UserDetailcontext } from '@/context/UserDetailcontext'
+import { Toaster } from 'sonner'
 
 function Provider({ children, ...props }) {
 
@@ -77,6 +78,7 @@ function Provider({ children, ...props }) {
                         <div className='w-full'>
                             <AppHeader />
                             {children}
+                            <Toaster />
                         </div>
                     </SidebarProvider>
                 </AiselectedModelContext.Provider>
