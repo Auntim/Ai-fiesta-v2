@@ -15,18 +15,29 @@ import Image from "next/image"
 import CreditProgress from "./CreditProgress";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/Config/FirebaseConfig";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import moment from "moment/moment";
 import Link from "next/link";
+import axios from "axios";
+import { AiselectedModelContext } from "@/context/AiSelectedModelContext";
 
 export function AppSidebar() {
     const { theme, setTheme } = useTheme();
     const { user } = useUser();
     const [chatHistory, setChatHistory] = useState([]);
+    const [remainingToken, setRemainingToken] = useState(0);
+    const { aiSelectedModel, setAiSelectedModel, messages, setMessages } = useContext(AiselectedModelContext);
+
 
     useEffect(() => {
         user && getChatHistory();
+
     }, [user])
+
+
+    useEffect(() => {
+        getRenainingToken();
+    }, [messages])
 
     const getChatHistory = async () => {
         const q = query(collection(db, 'chatHistory'), where("userEmail", "==", user?.primaryEmailAddress?.emailAddress));
@@ -50,6 +61,13 @@ export function AppSidebar() {
             message: lastUserMessage,
             lastUpdated: formatedDate,
         }
+
+    }
+
+    const getRenainingToken = async () => {
+        const result = await axios.post('/api/user-remain-msg');
+        console.log(result.data);
+        setRemainingToken(result.data.remainingToken);
 
     }
 
@@ -112,7 +130,7 @@ export function AppSidebar() {
                     </SignInButton>
                         :
                         <div>
-                            <CreditProgress />
+                            <CreditProgress remainingToken={remainingToken} />
                             <Button className={'w-full mb-3'}><Zap />Upgrade Plan</Button>
                             <Button className={' gap-2 flex justify-between'} variant={'ghost'}>
                                 <User2 />
