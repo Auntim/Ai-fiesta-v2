@@ -10,9 +10,9 @@ export async function POST(req) {
     const response = await axios.post(
         "https://kravixstudio.com/api/v1/chat",
         {
-            message: message, // Messages to AI
-            aiModel: model,                     // Selected AI model
-            outputType: "text"                         // 'text' or 'json'
+            message: message,
+            aiModel: model,
+            outputType: "text"
         },
         {
             headers: {
