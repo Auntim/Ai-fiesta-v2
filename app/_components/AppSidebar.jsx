@@ -8,7 +8,7 @@ import {
     SidebarGroup,
     SidebarHeader,
 } from "@/components/ui/sidebar"
-import { SignInButton, SignOutButton, useAuth, useUser } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, useAuth, UserProfile, useUser } from "@clerk/nextjs";
 import { Bold, Bolt, Moon, Sun, User2, Zap } from "lucide-react"
 import { useTheme } from "next-themes";
 import Image from "next/image"
@@ -139,9 +139,11 @@ export function AppSidebar() {
                                         <Button className={'w-full mb-3'}><Zap />Upgrade Plan</Button>
                                     </PricingModal>
                                 </div>}
-                            <Button className={' gap-2 flex justify-between'} variant={'ghost'}>
+                            <Button className={' gap-2 flex justify-center w-full'} variant={'ghost'}>
                                 <User2 />
                                 <h2>Settings</h2>
+
+
                             </Button>
                             <SignOutButton>
                                 <Button className={'w-full mt-3'} variant={'destructive'}>Sign Out</Button>
