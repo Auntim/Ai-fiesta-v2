@@ -15,18 +15,17 @@ import { MessageSquare, Lock, Loader } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { AiselectedModelContext } from '@/context/AiSelectedModelContext'
 import { useAuth, useUser } from '@clerk/nextjs'
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+// import Markdown from 'react-markdown'
+// import remarkGfm from 'remark-gfm'
 
 
 function AiMultiModel() {
     const { user } = useUser();
     const [aimodelList, setAimodelList] = useState(AiModelList)
     const { aiSelectedModel, setAiSelectedModel, messages, setMessages } = useContext(AiselectedModelContext);
-    // const { has } = useAuth();
-    // const paidUser = has({ plan: 'premium' })
     const isPremium = user?.publicMetadata?.plan === "premium";
     // console.log(user?.publicMetadata?.plan);
+    // console.log('user', user);
 
 
     // console.log(aiSelectedModel);
@@ -65,14 +64,14 @@ function AiMultiModel() {
 
     }
     return (
-        <div className='flex flex-1 h-[75vh] border-b'>
+        <div className='flex flex-1 h-[72vh] border-b'>
             {aimodelList.map((model, index) => (
                 <div key={index} className={`flex flex-col border-r overflow-auto flex-1  h-full ${model.enable ? ' min-w-[300px]' : 'flex-none max-w-[100px]'}`}>
-                    <div className='flex items-center w-full justify-between border-b p-4 h-[56px]'>
-                        <div className='flex items-center gap-4'>
+                    <div className='flex items-center w-full justify-between border-b p-3 h-[56px]'>
+                        <div className='flex items-center gap-5'>
                             <Image src={model.icon} alt='model' width={24} height={24} />
 
-                            {isPremium && model.enable &&
+                            {model.enable &&
                                 <Select defaultValue={aiSelectedModel[model.model]?.modelId}
                                     onValueChange={(value) => onSelectedValue(model.model, value)}
                                     disabled={!isPremium && model.premium}
@@ -114,11 +113,20 @@ function AiMultiModel() {
                     </div>}
 
                     {model.enable && aiSelectedModel[model.model]?.enable && (!model.premium || isPremium) &&
-                        <div className='flex-1 p-4'>
-                            <div className='flex-1 p-4 space-y-2'>
+                        <div className='flex-1 p-4 bg-black'>
+                            <div className='flex-1 p-1 space-y-2 inset-0 z-0 '
+                                style={{
+                                    background: "#000000",
+                                    backgroundImage: `
+        radial-gradient(circle, rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px)
+      `,
+                                    backgroundSize: "30px 30px",
+                                    backgroundPosition: "0 0",
+                                }}
+                            >
                                 {messages?.[model.model]?.map((m, i) => (
 
-                                    <div className={`p-2 rounded-md ${m.role == 'user' ? 'bg-blue-100 text-right' : 'bg-gray-200 text-left'}`} key={i}>
+                                    <div className={`p-2 rounded-md ${m.role == 'user' ? 'bg-gray-900 text-black text-right flex justify-end' : 'text-left'}`} key={i}>
 
                                         {m.role == 'assistant' && (
                                             <span className='text-gray-400 text-sm'>{m.model ?? model.model}</span>
@@ -126,9 +134,12 @@ function AiMultiModel() {
                                         <div className='flex items-center gap-1'>
                                             {m.content == 'loading' && <><Loader className='animate-spin h-4 w-4' /><span className='text-sm text-gray-400'>Thinking...</span> </>}
                                             {m.content !== 'loading' &&
-                                                <Markdown remarkPlugins={[remarkGfm]}  >
-                                                    {m.content}
-                                                </Markdown>
+
+                                                <div className='text-white'>
+                                                    <div className=''>
+                                                        {m.content}
+                                                    </div>
+                                                </div>
                                             }
 
                                         </div>
@@ -139,11 +150,29 @@ function AiMultiModel() {
                         </div>}
                 </div>
 
-            ))}
+            ))
+            }
 
-        </div>
+        </div >
 
     )
 }
 
 export default AiMultiModel
+
+
+//     < div className = "min-h-screen w-full bg-black relative" >
+//         {/* Dark White Dotted Grid Background */ }
+//         < div
+// className = "absolute inset-0 z-0"
+// style = {{
+//     background: "#000000",
+//         backgroundImage: `
+//         radial-gradient(circle, rgba(255, 255, 255, 0.2) 1.5px, transparent 1.5px)
+//       `,
+//             backgroundSize: "30px 30px",
+//                 backgroundPosition: "0 0",
+//     }}
+//   />
+// {/* Your Content/Components */ }
+// </div >

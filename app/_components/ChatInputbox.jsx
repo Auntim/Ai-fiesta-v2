@@ -166,8 +166,8 @@ function ChatInputbox() {
                 <AiMultiModel />
             </div>
             {/* inputbox */}
-            <div className='fixed bottom-0 left-0 w-full px-4 pb-4 flex justify-center'>
-                <div className='w-full max-w-2xl shadow-md rounded-xl border p-4'>
+            <div className='fixed bottom-0 left-0 w-full px-4 pb-4 flex justify-center mt-6'>
+                <div className='w-full max-w-2xl shadow-md rounded-xl border-2 p-4 ml-20'>
                     <input type="text" placeholder='Ask me Anything...'
                         className='border-0 outline-none w-full '
                         onChange={(event) => setUserInput(event.target.value)}
