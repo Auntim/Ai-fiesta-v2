@@ -7,9 +7,10 @@ import axios from 'axios'
 import { v4 as uuidv4 } from 'uuid';
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '@/Config/FirebaseConfig'
-import { useUser } from '@clerk/nextjs'
+import { useAuth, useUser } from '@clerk/nextjs'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
+
 
 function ChatInputbox() {
     const [userInput, setUserInput] = useState()
@@ -17,6 +18,10 @@ function ChatInputbox() {
     const [chatId, setChatId] = useState();
     const { user } = useUser();
     const params = useSearchParams();
+    const [loading, setLoading] = useState(false);
+    const { has } = useAuth();
+    // const paidUser = has({ plan: 'premium' })
+
 
     useEffect(() => {
         const chatid = params.get('chatId');
@@ -33,18 +38,20 @@ function ChatInputbox() {
 
     const handleSend = async () => {
         if (!userInput.trim()) return;
-
+        setLoading(true);
 
         // deduct anc check tokens here
-
-        const result = await axios.post('/api/user-remain-msg', {
-            token: 1
-        });
-        const remainingToken = result?.data?.remainingToken;
-        if (remainingToken <= 0) {
-            console.log('token exceed')
-            toast.error("Daily Limit Excceded😑")
-            return;
+        if (!has({ plan: 'premium' })) {
+            const result = await axios.post('/api/user-remain-msg', {
+                token: 1
+            });
+            const remainingToken = result?.data?.remainingToken;
+            if (remainingToken <= 0) {
+                console.log('token exceed')
+                toast.error("Daily Limit Excceded😑")
+                setLoading(false);
+                return;
+            }
         }
 
 
@@ -123,6 +130,7 @@ function ChatInputbox() {
                 }));
             }
         });
+        console.log('Enable model:', aiSelectedModel)
     };
 
     useEffect(() => {
