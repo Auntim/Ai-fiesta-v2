@@ -8,7 +8,7 @@ import {
     SidebarGroup,
     SidebarHeader,
 } from "@/components/ui/sidebar"
-import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
+import { SignInButton, SignOutButton, useAuth, useUser } from "@clerk/nextjs";
 import { Bold, Bolt, Moon, Sun, User2, Zap } from "lucide-react"
 import { useTheme } from "next-themes";
 import Image from "next/image"
@@ -20,6 +20,7 @@ import moment from "moment/moment";
 import Link from "next/link";
 import axios from "axios";
 import { AiselectedModelContext } from "@/context/AiSelectedModelContext";
+import PricingModal from "./PricingModal";
 
 export function AppSidebar() {
     const { theme, setTheme } = useTheme();
@@ -27,7 +28,8 @@ export function AppSidebar() {
     const [chatHistory, setChatHistory] = useState([]);
     const [remainingToken, setRemainingToken] = useState(0);
     const { aiSelectedModel, setAiSelectedModel, messages, setMessages } = useContext(AiselectedModelContext);
-
+    const { has } = useAuth();
+    // const paidUser = has({ plan: 'premium' })
 
     useEffect(() => {
         user && getChatHistory();
@@ -130,8 +132,13 @@ export function AppSidebar() {
                     </SignInButton>
                         :
                         <div>
-                            <CreditProgress remainingToken={remainingToken} />
-                            <Button className={'w-full mb-3'}><Zap />Upgrade Plan</Button>
+                            {!has({ plan: 'premium' }) &&
+                                <div>
+                                    <CreditProgress remainingToken={remainingToken} />
+                                    <PricingModal>
+                                        <Button className={'w-full mb-3'}><Zap />Upgrade Plan</Button>
+                                    </PricingModal>
+                                </div>}
                             <Button className={' gap-2 flex justify-between'} variant={'ghost'}>
                                 <User2 />
                                 <h2>Settings</h2>
