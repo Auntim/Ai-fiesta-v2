@@ -4,9 +4,8 @@ import React from 'react'
 
 function AppHeader() {
     return (
-        <div className='w-full h-16 border-b flex items-center justify-between px-4'>
+        <div className=' border-b '>
             <SidebarTrigger />
-
         </div>
     )
 }

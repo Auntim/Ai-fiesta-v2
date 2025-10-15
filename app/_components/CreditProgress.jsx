@@ -1,8 +1,9 @@
 import { Progress } from '@/components/ui/progress'
-import { SignOutButton } from '@clerk/nextjs'
+// import { SignOutButton } from '@clerk/nextjs'
 import React from 'react'
 
 function CreditProgress({ remainingToken }) {
+    console.log(remainingToken)
     return (
         <div className='p-2 border-2   rounded-2xl flex flex-col gap-2 mb-3'>
             <h2 className='font-bold text-md'>Free Plan</h2>

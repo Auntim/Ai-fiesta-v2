@@ -29,7 +29,8 @@ export function AppSidebar() {
     const [remainingToken, setRemainingToken] = useState(0);
     const { aiSelectedModel, setAiSelectedModel, messages, setMessages } = useContext(AiselectedModelContext);
     const { has } = useAuth();
-    // const paidUser = has({ plan: 'premium' })
+
+    console.log(remainingToken)
 
     useEffect(() => {
         user && getChatHistory();
@@ -68,17 +69,18 @@ export function AppSidebar() {
 
     const getRenainingToken = async () => {
         const result = await axios.post('/api/user-remain-msg');
-        console.log(result.data);
+        console.log('data', result.data.remainingToken);
         setRemainingToken(result.data.remainingToken);
 
     }
+
 
     return (
         <Sidebar>
             <SidebarHeader >
                 <div className="flex items-center justify-between ">
                     <div className="flex items-center justify-between space-x-1">
-                        <Image src={'/logo.svg'} alt="logo" height={50} width={50}
+                        <Image src={'/logo.svg'} alt="logo" height={60} width={60}
                             className="p-3"
                         />
                         <span className="text-xl font-bold">Ai-Fiesta</span>
